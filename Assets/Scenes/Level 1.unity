@@ -476,6 +476,7 @@ GameObject:
   - component: {fileID: 593316612}
   - component: {fileID: 593316611}
   - component: {fileID: 593316610}
+  - component: {fileID: 593316613}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -601,6 +602,20 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &593316613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593316608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 984cdc7396e64a7b9937ac1a854b2b82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraController
+  sensitivity: 2
+  maxYAngle: 80
 --- !u!1001 &617350892
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1165,8 +1180,9 @@ GameObject:
   - component: {fileID: 1820564184}
   - component: {fileID: 1820564183}
   - component: {fileID: 1820564186}
+  - component: {fileID: 1820564187}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1269,6 +1285,19 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1820564187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820564181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bd75968e66c4cc9b24d7cafc5dcd5a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  moveSpeed: 5
 --- !u!1001 &1856024580
 PrefabInstance:
   m_ObjectHideFlags: 0
