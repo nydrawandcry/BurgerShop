@@ -614,7 +614,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 984cdc7396e64a7b9937ac1a854b2b82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
-  sensitivity: 2
+  sensitivity: 0.4
   maxYAngle: 80
 --- !u!1001 &617350892
 PrefabInstance:
@@ -1297,7 +1297,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bd75968e66c4cc9b24d7cafc5dcd5a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  moveSpeed: 5
+  moveSpeed: 30
+  gravity: -9.81
 --- !u!1001 &1856024580
 PrefabInstance:
   m_ObjectHideFlags: 0
