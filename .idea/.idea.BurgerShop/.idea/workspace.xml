@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="651fe5ab-aed7-4d2a-933c-7e65e0a3d573" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.BurgerShop/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BurgerShop/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Settings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Settings.cs" afterDir="false" />
-    </list>
+    <list default="true" id="651fe5ab-aed7-4d2a-933c-7e65e0a3d573" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -110,7 +106,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1779536209376</updated>
-      <workItem from="1779536210429" duration="11952000" />
+      <workItem from="1779536210429" duration="12356000" />
     </task>
     <servers />
   </component>
