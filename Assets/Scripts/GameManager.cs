@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GameManager :  MonoBehaviour
 {
-    public static GameManager Instance;
+    public static GameManager Instance { get; private set; }
 
     /**
      * * Структура одного рецепта
@@ -20,23 +20,16 @@ public class GameManager :  MonoBehaviour
     [SerializeField] private List<Recipe> level2Recipes = new List<Recipe>();
     [SerializeField] private List<Recipe> level3Recipes = new List<Recipe>();
 
-    [Header("Current Level")]
-    [SerializeField] private int currentLevel = 1;
+    public int CurrentLevel { get; private set; } = 1;
+    public bool LevelEnded { get; private set; }
 
     [Header("Scene References")]
     [SerializeField] private BurgerAssemblyPlace burgerAssemblyPlace;
     [SerializeField] private BunDispenser bunDispenser;
-
-    [Header("Result Panels")]
-    [SerializeField] private GameObject winPanel;
-    [SerializeField] private GameObject losePanel;
     
     private List<Recipe> currentLevelRecipes;
     private int currentRecipeIndex;
     private int currentIngredientIndex;
-    private bool levelEnded;
-
-    public bool LevelEnded => levelEnded;
 
     void Awake()
     {
@@ -49,82 +42,52 @@ public class GameManager :  MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
-
-    void Start()
-    {
-        StartLevel(currentLevel); 
-    } 
     
     public void StartLevel(int level)
     {
-        currentLevel = level;
-        currentLevelRecipes = GetRecipesForLevel(currentLevel);
+        CurrentLevel = level;
+        LevelEnded = false;
 
+        currentLevelRecipes = GetRecipesForLevel(CurrentLevel);
         currentRecipeIndex = 0;
         currentIngredientIndex = 0;
-        levelEnded = false;
 
-        if (winPanel != null)
-        {
-            winPanel.SetActive(false);
-        }
-
-        if (losePanel != null)
-        {
-            losePanel.SetActive(false);
-        }
-
-        if (burgerAssemblyPlace != null)
-        {
-            burgerAssemblyPlace.ClearBurger();
-        }
-
-        if (bunDispenser != null)
-        {
-            bunDispenser.ResetBunOrder();
-        }
-
-        Debug.Log("Старт уровня: " + currentLevel);
-        Debug.Log("Рецептов на уровне: " + currentLevelRecipes.Count);
-
+        Debug.Log("GameManager: старт уровня " + CurrentLevel);
         PrintCurrentRecipe();
     }
     
-    public void RegisterPlacedIngredient(string ingredientName)
+    public bool RegisterPlacedIngredient(string ingredientName)
     {
-        if (levelEnded)
+        if (LevelEnded)
         {
-            return;
+            return false;
         }
 
         if (currentLevelRecipes == null || currentLevelRecipes.Count == 0)
         {
-            Debug.LogError("На уровне нет рецептов.");
+            Debug.LogError("GameManager: нет рецептов для уровня.");
             LoseLevel();
-            return;
+            return false;
         }
 
         Recipe currentRecipe = currentLevelRecipes[currentRecipeIndex];
 
         if (currentIngredientIndex >= currentRecipe.ingredients.Count)
         {
-            Debug.LogError("Игрок положил лишний ингредиент после окончания рецепта.");
+            Debug.LogWarning("Игрок положил лишний ингредиент.");
             LoseLevel();
-            return;
+            return false;
         }
 
         string expectedIngredient = ResolveIngredientName(currentRecipe.ingredients[currentIngredientIndex]);
         string actualIngredient = NormalizeIngredientName(ingredientName);
 
-        Debug.Log(
-            "Проверка ингредиента. Ожидалось: [" + expectedIngredient + "], положили: [" + actualIngredient + "]"
-        );
+        Debug.Log("Ожидалось: [" + expectedIngredient + "], положили: [" + actualIngredient + "]");
 
         if (actualIngredient != expectedIngredient)
         {
-            Debug.LogWarning("Неверный ингредиент. Поражение.");
             LoseLevel();
-            return;
+            return false;
         }
 
         currentIngredientIndex++;
@@ -133,6 +96,8 @@ public class GameManager :  MonoBehaviour
         {
             CompleteCurrentBurger();
         }
+
+        return true;
     }
     
     private void CompleteCurrentBurger()
@@ -145,56 +110,28 @@ public class GameManager :  MonoBehaviour
         if (currentRecipeIndex >= currentLevelRecipes.Count)
         {
             WinLevel();
-            return;
         }
-
-        Debug.Log("Переход к следующему бургеру.");
-
-        Invoke(nameof(PrepareNextBurger), 0.5f);
+        else
+        {
+            Debug.Log("Переход к следующему бургеру.");
+        }
     }
     
-    private void PrepareNextBurger()
+    public bool HasMoreRecipes()
     {
-        if (levelEnded)
-        {
-            return;
-        }
-
-        if (burgerAssemblyPlace != null)
-        {
-            burgerAssemblyPlace.ClearBurger();
-        }
-
-        if (bunDispenser != null)
-        {
-            bunDispenser.ResetBunOrder();
-        }
-
-        PrintCurrentRecipe();
+        return !LevelEnded && currentLevelRecipes != null && currentRecipeIndex < currentLevelRecipes.Count;
+    }
+    
+    public void WinLevel()
+    {
+        LevelEnded = true;
+        Debug.Log("Победа на уровне.");
     }
 
-    private void WinLevel()
+    public void LoseLevel()
     {
-        levelEnded = true;
-
-        Debug.Log("Победа! Все бургеры уровня собраны правильно.");
-
-        if (winPanel != null)
-        {
-            winPanel.SetActive(true);
-        }
-    }
-
-    private void LoseLevel()
-    {
-        levelEnded = true;
-
-        Debug.Log("Поражение.");
-
-        if (losePanel != null)
-        {
-            losePanel.SetActive(true);
-        }
+        LevelEnded = true;
+        Debug.Log("Поражение на уровне.");
     }
 
     private List<Recipe> GetRecipesForLevel(int level)

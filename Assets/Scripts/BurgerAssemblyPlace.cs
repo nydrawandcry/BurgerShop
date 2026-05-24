@@ -70,7 +70,12 @@ public class BurgerAssemblyPlace : MonoBehaviour
         
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.RegisterPlacedIngredient(ingredient._ingredientName);
+            bool correct = GameManager.Instance.RegisterPlacedIngredient(ingredient._ingredientName);
+
+            if (!correct)
+            {
+                Debug.Log("Поражение: ингредиент неправильный.");
+            }        
         }
         
         return true;
