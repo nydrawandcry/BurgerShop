@@ -7,6 +7,9 @@ public class PlayerInteraction :  MonoBehaviour
 
     [Header("Interaction")]
     [SerializeField] private float interactionDistance = 10f;
+    
+    [Header("Burger")]
+    [SerializeField] private BurgerAssemblyPlace burgerAssemblyPlace;
 
     private IngredientItem heldItem;
 
@@ -94,6 +97,23 @@ public class PlayerInteraction :  MonoBehaviour
     
     private void TryTakeFromDispenser(RaycastHit[] hits)
     {
+        if (burgerAssemblyPlace == null)
+        {
+            burgerAssemblyPlace = FindObjectOfType<BurgerAssemblyPlace>();
+        }
+        
+        if (burgerAssemblyPlace == null)
+        {
+            Debug.LogError("PlayerInteraction: burgerAssemblyPlace не назначен и не найден на сцене.");
+            return;
+        }
+        
+        if (burgerAssemblyPlace.IsBurgerClosed)
+        {
+            Debug.Log("Бургер уже закрыт. Больше ингредиенты брать нельзя.");
+            return;
+        }
+        
         foreach (RaycastHit hit in hits)
         {
             //для булок!
@@ -157,12 +177,18 @@ public class PlayerInteraction :  MonoBehaviour
             {
                 continue;
             }
+            
+            bool placed = assemblyPlace.PlaceIngredient(heldItem);
 
-            assemblyPlace.PlaceIngredient(heldItem);
-
-            Debug.Log("Положили ингредиент в бургер: " + heldItem._ingredientName);
-
-            heldItem = null;
+            if (placed)
+            {
+                Debug.Log("Положили ингредиент в бургер: " + heldItem._ingredientName);
+                heldItem = null;
+            }
+            else
+            {
+                Debug.LogWarning("Ингредиент не был положен.");
+            }
 
             return;
         }

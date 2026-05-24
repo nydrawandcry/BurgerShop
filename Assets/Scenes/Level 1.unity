@@ -722,6 +722,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BurgerAssemblyPlace
   stackRoot: {fileID: 645062413}
   layerGap: 0
+  topBunIngredientName: "\u0432\u0435\u0440\u0445\u043D\u044F\u044F \u0431\u0443\u043B\u043A\u0430"
 --- !u!4 &320569547
 Transform:
   m_ObjectHideFlags: 0
@@ -3096,6 +3097,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
   playerCamera: {fileID: 593316612}
   interactionDistance: 30
+  burgerAssemblyPlace: {fileID: 320569546}
 --- !u!1001 &1831882144
 PrefabInstance:
   m_ObjectHideFlags: 0
