@@ -17,18 +17,24 @@ public class IngredientDispenser : MonoBehaviour
 			return null;
 		}
 
-		IngredientItem newIngredient = Instantiate(
-			ingredientPrefab,
-			holdPoint.position,
-			holdPoint.rotation
-		);
+		IngredientItem newIngredient = Instantiate(ingredientPrefab, holdPoint);
 
+		//newIngredient.transform.localPosition = Vector3.zero;
+		//newIngredient.transform.localRotation = Quaternion.identity;
+		//newIngredient.transform.localScale = Vector3.one;
+		
 		if (!string.IsNullOrEmpty(ingredientName))
 		{
 			newIngredient._ingredientName = ingredientName;
 		}
 
 		newIngredient.PickUp(holdPoint);
+		
+		Debug.Log(
+			"Создан ингредиент: " + newIngredient.name +
+			" | Position: " + newIngredient.transform.position +
+			" | Parent: " + newIngredient.transform.parent.name
+		);
 
 		return newIngredient;
 	}

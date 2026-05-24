@@ -16,9 +16,11 @@ public class IngredientItem : MonoBehaviour
 
     public void PickUp(Transform holdPoint)
     {
-        transform.SetParent(holdPoint);
-        transform.localPosition = Vector3.zero;
-        transform.localRotation = Quaternion.identity;
+        transform.SetParent(holdPoint, false);
+        
+        //transform.localPosition = Vector3.zero;
+        //transform.localRotation = Quaternion.identity;
+        //transform.localScale = Vector3.one;
 
         if (_rb != null)
         {
@@ -27,6 +29,13 @@ public class IngredientItem : MonoBehaviour
         }
 
         SetCollidersEnabled(false);
+        
+        Debug.Log(
+            "Предмет прикреплен к HoldPoint: " + gameObject.name +
+            " | Parent: " + transform.parent.name +
+            " | Local Position: " + transform.localPosition +
+            " | World Position: " + transform.position
+        );
     }
     
     public void PlaceOnBurger(Transform stackRoot, Vector3 localPosition, Quaternion localRotation)

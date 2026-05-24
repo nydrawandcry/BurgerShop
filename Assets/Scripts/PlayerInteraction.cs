@@ -7,7 +7,7 @@ public class PlayerInteraction :  MonoBehaviour
     [SerializeField] private Transform holdPoint;
 
     [Header("Interaction")]
-    [SerializeField] private float interactionDistance = 3f;
+    [SerializeField] private float interactionDistance = 10f;
 
     private IngredientItem heldItem;
 
@@ -21,9 +21,17 @@ public class PlayerInteraction :  MonoBehaviour
 
     private void Update()
     {
+        if (playerCamera == null)
+        {
+            Debug.LogError("PlayerInteraction: playerCamera не назначена.");
+            return;
+        }
+        
+        Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+
         Debug.DrawRay(
-            playerCamera.transform.position,
-            playerCamera.transform.forward * interactionDistance,
+            ray.origin,
+            ray.direction * interactionDistance,
             Color.red
         );
         
@@ -34,65 +42,106 @@ public class PlayerInteraction :  MonoBehaviour
 
         if (Keyboard.current.eKey.wasPressedThisFrame)
         {
-            Interact();
+            Debug.Log("E нажата");
+            Interact(ray);
         }
     }
 
-    private void Interact()
+    private void Interact(Ray ray)
     {
-        if (playerCamera == null || holdPoint == null)
+        if (holdPoint == null)
         {
-            Debug.LogError("PlayerInteraction: не назначены playerCamera или holdPoint.");
+            Debug.LogError("PlayerInteraction: holdPoint не назначен.");
+            return;
+        }
+
+        RaycastHit[] allHits = Physics.RaycastAll(
+            ray,
+            interactionDistance,
+            ~0,
+            QueryTriggerInteraction.Collide
+        );
+
+        if (allHits.Length == 0)
+        {
+            Debug.Log("RaycastAll: вообще ни во что не попал.");
             return;
         }
         
-        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+        System.Array.Sort(allHits, (a, b) => a.distance.CompareTo(b.distance));
+        Debug.Log("RaycastAll попал в объектов: " + allHits.Length);
 
-        if (!Physics.Raycast(ray, out RaycastHit hit, interactionDistance))
+        
+        foreach (RaycastHit itemHit in allHits)
         {
-            return; 
+            Debug.Log(
+                "Hit: " + itemHit.collider.gameObject.name +
+                " | Layer: " + LayerMask.LayerToName(itemHit.collider.gameObject.layer) +
+                " | Distance: " + itemHit.distance
+            );
         }
-
+        
         if (heldItem == null)
         {
-            TryTakeFromDispenser(hit);
+            TryTakeFromDispenser(allHits);
         }
         else
         {
-            TryPlaceOnBurger(hit);
+            TryPlaceOnBurger(allHits);
         }
     }
     
-    private void TryTakeFromDispenser(RaycastHit hit)
+    private void TryTakeFromDispenser(RaycastHit[] hits)
     {
-        IngredientDispenser dispenser = hit.collider.GetComponentInParent<IngredientDispenser>();
-
-        if (dispenser == null)
+        foreach (RaycastHit hit in hits)
         {
+            IngredientDispenser dispenser = hit.collider.GetComponentInParent<IngredientDispenser>();
+
+            if (dispenser == null)
+            {
+                continue;
+            }
+
+            Debug.Log("IngredientDispenser найден на объекте: " + dispenser.gameObject.name);
+
+            heldItem = dispenser.SpawnIngredient(holdPoint);
+
+            if (heldItem != null)
+            {
+                Debug.Log("Взяли ингредиент: " + heldItem._ingredientName);
+            }
+            else
+            {
+                Debug.LogError("SpawnIngredient вернул null.");
+            }
+
             return;
         }
 
-        heldItem = dispenser.SpawnIngredient(holdPoint);
+        Debug.LogWarning("Среди объектов, в которые попал луч, нет IngredientDispenser.");
 
-        if (heldItem != null)
-        {
-            Debug.Log("Взяли ингредиент: " + heldItem._ingredientName);
-        }
     }
 
-    private void TryPlaceOnBurger(RaycastHit hit)
+    private void TryPlaceOnBurger(RaycastHit[] hits)
     {
-        BurgerAssemblyPlace assemblyPlace = hit.collider.GetComponentInParent<BurgerAssemblyPlace>();
-
-        if (assemblyPlace == null)
+        foreach (RaycastHit hit in hits)
         {
+            BurgerAssemblyPlace assemblyPlace = hit.collider.GetComponentInParent<BurgerAssemblyPlace>();
+
+            if (assemblyPlace == null)
+            {
+                continue;
+            }
+
+            assemblyPlace.PlaceIngredient(heldItem);
+
+            Debug.Log("Положили ингредиент в бургер: " + heldItem._ingredientName);
+
+            heldItem = null;
+
             return;
         }
 
-        assemblyPlace.PlaceIngredient(heldItem);
-
-        Debug.Log("Положили ингредиент в бургер: " + heldItem._ingredientName);
-
-        heldItem = null;
+        Debug.LogWarning("Среди объектов, в которые попал луч, нет BurgerAssemblyPlace.");
     }
 }
