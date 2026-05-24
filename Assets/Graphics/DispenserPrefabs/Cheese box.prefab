@@ -173,6 +173,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IngredientItem
   _ingredientName: cheese
+  holdLocalPosition: {x: 0, y: 0, z: 0}
+  holdLocalRotation: {x: 0, y: 0, z: 0}
+  holdLocalScale: {x: 1, y: 1, z: 1}
+  burgerLocalRotation: {x: 0, y: 0, z: 0}
+  burgerLocalScale: {x: 1, y: 1, z: 1}
 --- !u!1 &8446121948081464556
 GameObject:
   m_ObjectHideFlags: 0

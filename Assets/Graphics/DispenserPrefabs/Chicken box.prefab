@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29d0ed49c0314426a9deba12ebbb106d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IngredientDispenser
-  ingredientPrefab: {fileID: 0}
-  ingredientName: 
+  ingredientPrefab: {fileID: -476381403877320493, guid: 259800b632d24b94683ded556fed028d, type: 3}
+  ingredientName: chicken
 --- !u!1 &4481814532503926270
 GameObject:
   m_ObjectHideFlags: 0
