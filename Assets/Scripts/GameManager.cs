@@ -22,10 +22,6 @@ public class GameManager :  MonoBehaviour
 
     public int CurrentLevel { get; private set; } = 1;
     public bool LevelEnded { get; private set; }
-
-    [Header("Scene References")]
-    [SerializeField] private BurgerAssemblyPlace burgerAssemblyPlace;
-    [SerializeField] private BunDispenser bunDispenser;
     
     private List<Recipe> currentLevelRecipes;
     private int currentRecipeIndex;
