@@ -6,12 +6,12 @@ public class IngredientItem : MonoBehaviour
     public string _ingredientName;
 
     private Rigidbody _rb;
-    private Collider _itemCollider;
+    private Collider[] _itemColliders;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
-        _itemCollider = GetComponent<Collider>();
+        _itemColliders = GetComponentsInChildren<Collider>();
     }
 
     public void PickUp(Transform holdPoint)
@@ -26,10 +26,22 @@ public class IngredientItem : MonoBehaviour
             _rb.useGravity = false;
         }
 
-        if (_itemCollider != null)
+        SetCollidersEnabled(false);
+    }
+    
+    public void PlaceOnBurger(Transform stackRoot, Vector3 localPosition, Quaternion localRotation)
+    {
+        transform.SetParent(stackRoot);
+        transform.localPosition = localPosition;
+        transform.localRotation = localRotation;
+
+        if (_rb != null)
         {
-            _itemCollider.enabled = false;
+            _rb.isKinematic = true;
+            _rb.useGravity = false;
         }
+
+        SetCollidersEnabled(false);
     }
 
     public void Drop(Vector3 dropPosition)
@@ -37,15 +49,23 @@ public class IngredientItem : MonoBehaviour
         transform.SetParent(null);
         transform.position = dropPosition;
 
-        if (_itemCollider != null)
+        if (_itemColliders != null)
         {
-            _itemCollider.enabled = true;
+            SetCollidersEnabled(true);
         }
 
         if (_rb != null)
         {
             _rb.isKinematic = false;
             _rb.useGravity = true;
+        }
+    }
+    
+    private void SetCollidersEnabled(bool value)
+    {
+        foreach (Collider itemCollider in _itemColliders)
+        {
+            itemCollider.enabled = value;
         }
     }
 }
