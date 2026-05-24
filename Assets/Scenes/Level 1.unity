@@ -2874,6 +2874,7 @@ GameObject:
   m_Component:
   - component: {fileID: 922341848}
   - component: {fileID: 922341847}
+  - component: {fileID: 922341849}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -2916,6 +2917,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &922341849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 922341846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbe19dd5cb434d389c41a776b221aae2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BurgerTimer
+  timerText: {fileID: 450618414}
 --- !u!1 &946148540
 GameObject:
   m_ObjectHideFlags: 0
