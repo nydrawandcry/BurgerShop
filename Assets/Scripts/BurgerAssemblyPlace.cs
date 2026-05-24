@@ -17,11 +17,6 @@ public class BurgerAssemblyPlace : MonoBehaviour
     private readonly List<string> placedIngredientNames = new List<string>();
     
     private float currentTopWorldY;
-
-    public bool IsBurgerClosed
-    {
-        get; private set;
-    }
     
     private void Awake()
     {
@@ -33,7 +28,6 @@ public class BurgerAssemblyPlace : MonoBehaviour
         }
         
         currentTopWorldY = stackRoot.position.y;
-        IsBurgerClosed = false;
     }
 
     public bool PlaceIngredient(IngredientItem ingredient)
@@ -43,7 +37,7 @@ public class BurgerAssemblyPlace : MonoBehaviour
             return false;
         }
         
-        if (IsBurgerClosed)
+        if (GameManager.Instance != null && GameManager.Instance.LevelEnded)
         {
             Debug.LogWarning("Бургер уже закрыт верхней булкой. Больше ингредиенты класть нельзя.");
             return false;
@@ -70,20 +64,14 @@ public class BurgerAssemblyPlace : MonoBehaviour
 
         placedItems.Add(ingredient);
         placedIngredientNames.Add(ingredient._ingredientName);
-        
-        string placedName = ingredient._ingredientName.Trim().ToLower();
-        string topBunName = topBunIngredientName.Trim().ToLower();
-
-        Debug.Log("Проверка закрытия бургера. Положили: [" + placedName + "], верхняя булка должна быть: [" + topBunName + "]");
-
-        if (placedName == topBunName)
-        {
-            IsBurgerClosed = true;
-            Debug.Log("Бургер закрыт верхней булкой. Больше ингредиенты брать нельзя.");
-        }
 
         Debug.Log("Положили ингредиент: " + ingredient._ingredientName);
         Debug.Log("Текущий бургер: " + string.Join(" -> ", placedIngredientNames));
+        
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.RegisterPlacedIngredient(ingredient._ingredientName);
+        }
         
         return true;
     }
@@ -107,6 +95,5 @@ public class BurgerAssemblyPlace : MonoBehaviour
         placedIngredientNames.Clear();
 
         currentTopWorldY = stackRoot.position.y;
-        IsBurgerClosed = false;
     }
 }

@@ -59,6 +59,12 @@ public class PlayerInteraction :  MonoBehaviour
 
     private void Interact(Ray ray)
     {
+        if (GameManager.Instance != null && GameManager.Instance.LevelEnded)
+        {
+            Debug.Log("Уровень завершён. Взаимодействие заблокировано.");
+            return;
+        }
+        
         RaycastHit[] allHits = Physics.RaycastAll(
             ray,
             interactionDistance,
@@ -105,12 +111,6 @@ public class PlayerInteraction :  MonoBehaviour
         if (burgerAssemblyPlace == null)
         {
             Debug.LogError("PlayerInteraction: burgerAssemblyPlace не назначен и не найден на сцене.");
-            return;
-        }
-        
-        if (burgerAssemblyPlace.IsBurgerClosed)
-        {
-            Debug.Log("Бургер уже закрыт. Больше ингредиенты брать нельзя.");
             return;
         }
         
