@@ -1,9 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum LevelResult
+{
+    None,
+    Win,
+    Lose
+}
+
 public class GameManager :  MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    public LevelResult CurrentResult { get; private set; } = LevelResult.None;
 
     /**
      * * Структура одного рецепта
@@ -41,6 +49,7 @@ public class GameManager :  MonoBehaviour
     
     public void StartLevel(int level)
     {
+        CurrentResult = LevelResult.None;
         CurrentLevel = level;
         LevelEnded = false;
 
@@ -121,12 +130,14 @@ public class GameManager :  MonoBehaviour
     public void WinLevel()
     {
         LevelEnded = true;
+        CurrentResult = LevelResult.Win;
         Debug.Log("Победа на уровне.");
     }
 
     public void LoseLevel()
     {
         LevelEnded = true;
+        CurrentResult = LevelResult.Lose;
         Debug.Log("Поражение на уровне.");
     }
 

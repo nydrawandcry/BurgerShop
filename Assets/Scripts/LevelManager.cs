@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -41,7 +42,7 @@ public class LevelManager : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance == null || resultShown == true)
+        if (GameManager.Instance == null || resultShown)
         {
             return;
         }
@@ -52,6 +53,21 @@ public class LevelManager : MonoBehaviour
         }
 
         resultShown = true;
+        
+        switch (GameManager.Instance.CurrentResult)
+        {
+            case LevelResult.Win:
+                ShowWinPanel();
+                break;
+
+            case LevelResult.Lose:
+                ShowLosePanel();
+                break;
+
+            default:
+                Debug.LogWarning("LevelManager: уровень завершён, но результат не указан.");
+                break;
+        }
     }
 
     public void PrepareNextBurger()
@@ -81,5 +97,25 @@ public class LevelManager : MonoBehaviour
         {
             losePanel.SetActive(true);
         }
+    }
+    
+    // --- Buttons --- //
+
+    public void RestartLevel()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void LoadNextLevel()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+        
+    public void ExitToMainMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadSceneAsync(0);
     }
 }
