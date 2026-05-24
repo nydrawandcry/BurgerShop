@@ -4,7 +4,6 @@ public class PlayerInteraction :  MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Camera playerCamera;
-    [SerializeField] private Transform holdPoint;
 
     [Header("Interaction")]
     [SerializeField] private float interactionDistance = 10f;
@@ -46,15 +45,17 @@ public class PlayerInteraction :  MonoBehaviour
             Interact(ray);
         }
     }
+    
+    private void LateUpdate()
+    {
+        if (heldItem != null)
+        {
+            heldItem.RefreshHoldTransform();
+        }
+    }
 
     private void Interact(Ray ray)
     {
-        if (holdPoint == null)
-        {
-            Debug.LogError("PlayerInteraction: holdPoint не назначен.");
-            return;
-        }
-
         RaycastHit[] allHits = Physics.RaycastAll(
             ray,
             interactionDistance,
@@ -104,10 +105,11 @@ public class PlayerInteraction :  MonoBehaviour
 
             Debug.Log("IngredientDispenser найден на объекте: " + dispenser.gameObject.name);
 
-            heldItem = dispenser.SpawnIngredient(holdPoint);
+            heldItem = dispenser.SpawnIngredient();
 
             if (heldItem != null)
             {
+                heldItem.PickUp(playerCamera.transform);
                 Debug.Log("Взяли ингредиент: " + heldItem._ingredientName);
             }
             else

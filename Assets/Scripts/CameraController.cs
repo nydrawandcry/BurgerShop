@@ -32,7 +32,7 @@ public class CameraController : MonoBehaviour
             transform.parent.Rotate(Vector3.up * mouseX);
         }
         
-        rotationX += mouseY;
+        rotationX -= mouseY;
         rotationX = Mathf.Clamp(rotationX, -maxYAngle, maxYAngle);
         transform.localRotation = Quaternion.Euler(rotationX, 0.0f, 0.0f);
     }

@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 7, y: 7, z: 7}
+  m_LocalScale: {x: 200, y: 200, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4489471148048060377}
@@ -99,7 +99,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4489471148048060377}
   - component: {fileID: -4268370740921660788}
-  - component: {fileID: 457657545909864168}
   m_Layer: 0
   m_Name: Tomato slices
   m_TagString: Untagged
@@ -136,24 +135,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IngredientItem
   _ingredientName: tomato
---- !u!65 &457657545909864168
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5610354145119331124}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.004, y: 0.001, z: 0.004}
-  m_Center: {x: 0, y: 0, z: 0}
+  holdLocalPosition: {x: 0.25, y: -0.25, z: 1.1}
+  holdLocalRotation: {x: -90, y: 0, z: 0}
+  holdLocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  burgerLocalRotation: {x: 0, y: 0, z: 0}
+  burgerLocalScale: {x: 1, y: 1, z: 1}

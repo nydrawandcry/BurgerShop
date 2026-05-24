@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7901080509945405818}
   - component: {fileID: 6888113851247307555}
-  - component: {fileID: 8975747218983911575}
   m_Layer: 0
   m_Name: LettucePrefab
   m_TagString: Untagged
@@ -47,27 +46,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IngredientItem
   _ingredientName: lettuce
---- !u!65 &8975747218983911575
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3199963813642895209}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.023391362, y: 0.023387343, z: 0.0018079351}
-  m_Center: {x: -0.0000007613562, y: 0.000016740054, z: 0.00038569176}
+  holdLocalPosition: {x: 0.25, y: -0.3, z: 1.1}
+  holdLocalRotation: {x: -90, y: 0, z: 0}
+  holdLocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  burgerLocalRotation: {x: 0, y: 0, z: 0}
+  burgerLocalScale: {x: 1, y: 1, z: 1}
 --- !u!1 &4122367786208916086
 GameObject:
   m_ObjectHideFlags: 0
@@ -96,7 +79,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7901080509945405818}

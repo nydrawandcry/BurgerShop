@@ -26,13 +26,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3284678590376219216}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 914821842501331640}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &2359630691866076138
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -99,7 +99,6 @@ GameObject:
   m_Component:
   - component: {fileID: 914821842501331640}
   - component: {fileID: 801560434245768645}
-  - component: {fileID: -4175615309028624886}
   m_Layer: 0
   m_Name: CheeseSlicePrefab
   m_TagString: Untagged
@@ -115,14 +114,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5229864800284807047}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4663284898896521674}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &801560434245768645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,24 +135,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IngredientItem
   _ingredientName: cheese
---- !u!65 &-4175615309028624886
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5229864800284807047}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.029894385, y: 0.029886866, z: 0.003373763}
-  m_Center: {x: 0.0005859486, y: -0.00028794532, z: -0.0014887535}
+  holdLocalPosition: {x: 0.25, y: -0.25, z: 1.1}
+  holdLocalRotation: {x: -90, y: 0, z: 0}
+  holdLocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  burgerLocalRotation: {x: 0, y: 0, z: 0}
+  burgerLocalScale: {x: 1, y: 1, z: 1}

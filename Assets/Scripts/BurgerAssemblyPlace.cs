@@ -6,17 +6,25 @@ public class BurgerAssemblyPlace : MonoBehaviour
 {
     [Header("Stack")]
     [SerializeField] private Transform stackRoot;
-    [SerializeField] private float layerHeight = 0.08f;
 
+    [Tooltip("Маленький зазор между слоями. 0 = вплотную. Можно поставить -0.002, если остаются щели.")]
+    [SerializeField] private float layerGap = 0f;
+    
     private readonly List<IngredientItem> placedItems = new List<IngredientItem>();
     private readonly List<string> placedIngredientNames = new List<string>();
+    
+    private float currentTopWorldY;
     
     private void Awake()
     {
         if (stackRoot == null)
         {
-            stackRoot = transform;
+            Debug.LogError("BurgerAssemblyPlace: не назначен StackRoot. Создай пустой объект StackRoot и перетащи его в поле.");
+            enabled = false;
+            return;
         }
+        
+        currentTopWorldY = stackRoot.position.y;
     }
 
     public void PlaceIngredient(IngredientItem ingredient)
@@ -26,17 +34,24 @@ public class BurgerAssemblyPlace : MonoBehaviour
             return;
         }
 
-        Vector3 localPosition = new Vector3(
-            0f,
-            placedItems.Count * layerHeight,
-            0f
-        );
+        ingredient.PlaceOnBurger(stackRoot, Vector3.zero);
 
-        ingredient.PlaceOnBurger(
-            stackRoot,
-            localPosition,
-            Quaternion.identity
-        );
+        if (ingredient.TryGetRendererBounds(out Bounds bounds))
+        {
+            float offsetToPutBottomOnStack = currentTopWorldY - bounds.min.y;
+
+            ingredient.transform.position += Vector3.up * offsetToPutBottomOnStack;
+
+            if (ingredient.TryGetRendererBounds(out Bounds updatedBounds))
+            {
+                currentTopWorldY = updatedBounds.max.y + layerGap;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("У ингредиента нет Renderer: " + ingredient.gameObject.name);
+            currentTopWorldY += 0.05f;
+        }
 
         placedItems.Add(ingredient);
         placedIngredientNames.Add(ingredient._ingredientName);
@@ -62,5 +77,6 @@ public class BurgerAssemblyPlace : MonoBehaviour
 
         placedItems.Clear();
         placedIngredientNames.Clear();
+        currentTopWorldY = stackRoot.position.y;
     }
 }

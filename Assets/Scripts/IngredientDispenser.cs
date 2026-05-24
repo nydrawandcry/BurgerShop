@@ -9,7 +9,7 @@ public class IngredientDispenser : MonoBehaviour
 	[Header("Data")]
 	[SerializeField] private string ingredientName;
 
-	public IngredientItem SpawnIngredient(Transform holdPoint)
+	public IngredientItem SpawnIngredient()
 	{
 		if (ingredientPrefab == null)
 		{
@@ -17,24 +17,14 @@ public class IngredientDispenser : MonoBehaviour
 			return null;
 		}
 
-		IngredientItem newIngredient = Instantiate(ingredientPrefab, holdPoint);
-
-		//newIngredient.transform.localPosition = Vector3.zero;
-		//newIngredient.transform.localRotation = Quaternion.identity;
-		//newIngredient.transform.localScale = Vector3.one;
+		IngredientItem newIngredient = Instantiate(ingredientPrefab);
 		
 		if (!string.IsNullOrEmpty(ingredientName))
 		{
 			newIngredient._ingredientName = ingredientName;
 		}
-
-		newIngredient.PickUp(holdPoint);
 		
-		Debug.Log(
-			"Создан ингредиент: " + newIngredient.name +
-			" | Position: " + newIngredient.transform.position +
-			" | Parent: " + newIngredient.transform.parent.name
-		);
+		Debug.Log("Создан ингредиент: " + newIngredient.name);
 
 		return newIngredient;
 	}
