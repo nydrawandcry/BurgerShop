@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,8 @@ public class GameManager :  MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public LevelResult CurrentResult { get; private set; } = LevelResult.None;
+    
+    public event Action OnBurgerStarted;
 
     /**
      * * Структура одного рецепта
@@ -59,6 +62,8 @@ public class GameManager :  MonoBehaviour
 
         Debug.Log("GameManager: старт уровня " + CurrentLevel);
         PrintCurrentRecipe();
+        
+        OnBurgerStarted?.Invoke();
     }
     
     public bool RegisterPlacedIngredient(string ingredientName)
@@ -115,11 +120,13 @@ public class GameManager :  MonoBehaviour
         if (currentRecipeIndex >= currentLevelRecipes.Count)
         {
             WinLevel();
+            return;
         }
-        else
-        {
-            Debug.Log("Переход к следующему бургеру.");
-        }
+        
+        Debug.Log("Переход к следующему бургеру.");
+        PrintCurrentRecipe();
+        
+        OnBurgerStarted?.Invoke();
     }
     
     public bool HasMoreRecipes()
@@ -129,6 +136,11 @@ public class GameManager :  MonoBehaviour
     
     public void WinLevel()
     {
+        if (LevelEnded)
+        {
+            return;
+        }
+        
         LevelEnded = true;
         CurrentResult = LevelResult.Win;
         Debug.Log("Победа на уровне.");
@@ -136,6 +148,11 @@ public class GameManager :  MonoBehaviour
 
     public void LoseLevel()
     {
+        if (LevelEnded)
+        {
+            return;
+        }
+
         LevelEnded = true;
         CurrentResult = LevelResult.Lose;
         Debug.Log("Поражение на уровне.");

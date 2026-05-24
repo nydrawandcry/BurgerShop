@@ -75,6 +75,6 @@ public class BurgerTimer : MonoBehaviour
         }
 
         lastShownSecond = seconds;
-        timerText.text = "Time: " + seconds;
+        timerText.text = "0:" + seconds;
     }
 }

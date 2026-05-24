@@ -10,6 +10,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private BurgerAssemblyPlace burgerAssemblyPlace;
     [SerializeField] private BunDispenser bunDispenser;
 
+    [Header("Timer")]
+    [SerializeField] private BurgerTimer burgerTimer;
+    
     [Header("Result Panels")]
     [SerializeField] private GameObject winPanel;
     [SerializeField] private GameObject losePanel;
@@ -42,11 +45,20 @@ public class LevelManager : MonoBehaviour
 
         if (GameManager.Instance != null)
         {
+            GameManager.Instance.OnBurgerStarted += HandleBurgerStarted;
             GameManager.Instance.StartLevel(levelNumber);
         }
         else
         {
             Debug.LogError("LevelManager: GameManager.Instance не найден.");
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnBurgerStarted -= HandleBurgerStarted;
         }
     }
 
@@ -79,6 +91,20 @@ public class LevelManager : MonoBehaviour
                 break;
         }
     }
+    
+    private void HandleBurgerStarted()
+    {
+        PrepareNextBurger();
+
+        if (burgerTimer != null)
+        {
+            burgerTimer.StartTimer();
+        }
+        else
+        {
+            Debug.LogError("LevelManager: BurgerTimer не назначен.");
+        }
+    }
 
     public void PrepareNextBurger()
     {
@@ -107,6 +133,11 @@ public class LevelManager : MonoBehaviour
     
     private void ShowResultPanel(GameObject panel)
     {
+        if (burgerTimer != null)
+        {
+            burgerTimer.StopTimer();
+        }
+        
         Time.timeScale = 0f;
 
         UnlockCursorForUI();
