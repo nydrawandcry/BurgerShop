@@ -8,7 +8,7 @@ public enum MeatType
 public static class GameSettings 
 { 
     /**
-     * * Тип котлеты (курица или говядина - по дефолту говядина)
+     * * Тип котлеты (курица или говядина - по дефолту курица)
      */ 
     public static MeatType Meat = MeatType.Chicken; 
     
@@ -24,6 +24,7 @@ public static class GameSettings
 
     public static void Set(MeatType meat, int timePerBurger)
     {
+        Meat = meat;
         TimePerBurger = Mathf.Clamp(timePerBurger, 5, 60);
     } 
     public static void ResetToDefaults() 
