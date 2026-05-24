@@ -1755,6 +1755,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 810027224}
+  - component: {fileID: 810027225}
   m_Layer: 0
   m_Name: MeatDispenserPoint
   m_TagString: Untagged
@@ -1779,6 +1780,20 @@ Transform:
   - {fileID: 1491473734}
   m_Father: {fileID: 1275223619}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &810027225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 810027223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38572c1a7b674244b58ca1766376f827, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MeatDispenserSelector
+  chickenDispenser: {fileID: 1491473735}
+  beefDispenser: {fileID: 113495978733120065}
 --- !u!1 &826212849
 GameObject:
   m_ObjectHideFlags: 0
@@ -2599,6 +2614,11 @@ PrefabInstance:
 --- !u!4 &1491473734 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5910991827057310255, guid: 1bdd34d4ee7f26b4bb75a572113babd6, type: 3}
+  m_PrefabInstance: {fileID: 1491473733}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1491473735 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2848431162249598276, guid: 1bdd34d4ee7f26b4bb75a572113babd6, type: 3}
   m_PrefabInstance: {fileID: 1491473733}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1517267609
@@ -4118,6 +4138,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f476cc1278bd5154ba37f2d6e16edee1, type: 3}
+--- !u!1 &113495978733120065 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2972945121526999297, guid: f476cc1278bd5154ba37f2d6e16edee1, type: 3}
+  m_PrefabInstance: {fileID: 113495978733120064}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &296873509690061437
 PrefabInstance:
   m_ObjectHideFlags: 0
