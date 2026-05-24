@@ -22,11 +22,11 @@ public class GameManager :  MonoBehaviour
     public int currentLevel = 1; 
     private readonly string[] optionalIngredients =
     {
-        "салат", 
-        "помидор", 
-        "сыр", 
-        "огурец", 
-        "кетчуп"
+        "lettuce", 
+        "tomato", 
+        "cheese", 
+        "cucumber", 
+        "ketchup"
     };
 
     void Awake()
@@ -72,7 +72,7 @@ public class GameManager :  MonoBehaviour
     } 
     private void GenerateIngredientsForRecipe(Recipe recipe) 
     { 
-        recipe.ingredients.Add("нижняя булка"); 
+        recipe.ingredients.Add("bottom loaf"); 
         recipe.ingredients.Add(GetMeatIngredientName()); 
         int extraIngredientCount = Mathf.Max(0, GameSettings.IngredientCount - 3); 
         List<string> availableIngredients = new List<string>(optionalIngredients); 
@@ -86,7 +86,7 @@ public class GameManager :  MonoBehaviour
             recipe.ingredients.Add(randomIngredient); // Убираем ингредиент, чтобы он не повторялся в одном рецепте
             availableIngredients.RemoveAt(randomIndex); 
         } 
-        recipe.ingredients.Add("верхняя булка"); 
+        recipe.ingredients.Add("top loaf"); 
     }
 
     private string GetMeatIngredientName()
@@ -94,11 +94,11 @@ public class GameManager :  MonoBehaviour
         switch (GameSettings.Meat)
         {
             case MeatType.Chicken: 
-                return "курица"; 
+                return "chicken"; 
             case MeatType.Beef: 
-                return "говядина"; 
+                return "beef"; 
             default: 
-                return "курица";
+                return "chicken";
         }
     }
 

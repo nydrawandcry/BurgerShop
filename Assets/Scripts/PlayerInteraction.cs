@@ -96,6 +96,29 @@ public class PlayerInteraction :  MonoBehaviour
     {
         foreach (RaycastHit hit in hits)
         {
+            //для булок!
+            BunDispenser bunDispenser = hit.collider.GetComponentInParent<BunDispenser>();
+
+            if (bunDispenser != null)
+            {
+                Debug.Log("BunDispenser найден на объекте: " + bunDispenser.gameObject.name);
+
+                heldItem = bunDispenser.SpawnIngredient();
+
+                if (heldItem != null)
+                {
+                    heldItem.PickUp(playerCamera.transform);
+                    Debug.Log("Взяли булку: " + heldItem._ingredientName);
+                }
+                else
+                {
+                    Debug.LogError("BunDispenser вернул null.");
+                }
+
+                return;
+            }
+            //для булок кончилось
+            
             IngredientDispenser dispenser = hit.collider.GetComponentInParent<IngredientDispenser>();
 
             if (dispenser == null)
