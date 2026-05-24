@@ -2762,6 +2762,9 @@ MonoBehaviour:
   bunDispenser: {fileID: 599514913}
   winPanel: {fileID: 1114425726}
   losePanel: {fileID: 1038671484}
+  playerController: {fileID: 1820564187}
+  cameraController: {fileID: 593316613}
+  playerInteraction: {fileID: 1820564188}
 --- !u!4 &922341848
 Transform:
   m_ObjectHideFlags: 0

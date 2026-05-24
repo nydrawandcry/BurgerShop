@@ -13,11 +13,21 @@ public class LevelManager : MonoBehaviour
     [Header("Result Panels")]
     [SerializeField] private GameObject winPanel;
     [SerializeField] private GameObject losePanel;
+    
+    [Header("Gameplay Scripts")]
+    [SerializeField] private PlayerController playerController;
+    [SerializeField] private CameraController cameraController;
+    [SerializeField] private PlayerInteraction playerInteraction;
 
     private bool resultShown;
 
     private void Start()
     {
+        Time.timeScale = 1f;
+        
+        LockCursorForGameplay();
+        SetGameplayScriptsEnabled(true);
+        
         if (winPanel != null)
         {
             winPanel.SetActive(false);
@@ -85,18 +95,61 @@ public class LevelManager : MonoBehaviour
 
     public void ShowWinPanel()
     {
-        if (winPanel != null)
-        {
-            winPanel.SetActive(true);
-        }
+        ShowResultPanel(winPanel);
+        Debug.Log("Показана панель победы.");
     }
 
     public void ShowLosePanel()
     {
-        if (losePanel != null)
+        ShowResultPanel(losePanel);
+        Debug.Log("Показана панель поражения.");
+    }
+    
+    private void ShowResultPanel(GameObject panel)
+    {
+        Time.timeScale = 0f;
+
+        UnlockCursorForUI();
+        SetGameplayScriptsEnabled(false);
+
+        if (panel != null)
         {
-            losePanel.SetActive(true);
+            panel.SetActive(true);
         }
+        else
+        {
+            Debug.LogError("LevelManager: панель результата не назначена.");
+        }
+    }
+    
+    private void SetGameplayScriptsEnabled(bool value)
+    {
+        if (playerController != null)
+        {
+            playerController.enabled = value;
+        }
+
+        if (cameraController != null)
+        {
+            cameraController.enabled = value;
+        }
+
+        if (playerInteraction != null)
+        {
+            playerInteraction.enabled = value;
+        }
+    }
+
+    private void LockCursorForGameplay()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    private void UnlockCursorForUI()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
     
     // --- Buttons --- //
