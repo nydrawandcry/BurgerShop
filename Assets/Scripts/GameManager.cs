@@ -37,6 +37,21 @@ public class GameManager :  MonoBehaviour
     private List<Recipe> currentLevelRecipes;
     private int currentRecipeIndex;
     private int currentIngredientIndex;
+    
+    public int CurrentRecipeNumber => currentRecipeIndex + 1;
+
+    public int TotalRecipesInLevel
+    {
+        get
+        {
+            if (currentLevelRecipes == null)
+            {
+                return 0;
+            }
+
+            return currentLevelRecipes.Count;
+        }
+    }
 
     void Awake()
     {
@@ -232,5 +247,29 @@ public class GameManager :  MonoBehaviour
             "Текущий рецепт: " + recipe.name + " | " +
             string.Join(" -> ", resolvedIngredients)
         );
+    }
+    
+    public List<string> GetCurrentResolvedRecipeIngredients()
+    {
+        List<string> result = new List<string>();
+
+        if (currentLevelRecipes == null || currentLevelRecipes.Count == 0)
+        {
+            return result;
+        }
+
+        if (currentRecipeIndex < 0 || currentRecipeIndex >= currentLevelRecipes.Count)
+        {
+            return result;
+        }
+
+        Recipe recipe = currentLevelRecipes[currentRecipeIndex];
+
+        foreach (string ingredient in recipe.ingredients)
+        {
+            result.Add(ResolveIngredientName(ingredient));
+        }
+
+        return result;
     }
 }
