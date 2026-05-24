@@ -22,11 +22,10 @@ public static class GameSettings
      */ 
     public static int TimePerBurger = 15;
 
-    public static void Set(MeatType meat, int ingredientCount, int timePerBurger)
+    public static void Set(MeatType meat, int timePerBurger)
     {
-        Meat = meat; IngredientCount = Mathf.Clamp(ingredientCount, 3, 5); 
         TimePerBurger = Mathf.Clamp(timePerBurger, 5, 60);
     } 
     public static void ResetToDefaults() 
-    { Set(MeatType.Chicken, 3, 30); } 
+    { Set(MeatType.Chicken, 30); } 
 }

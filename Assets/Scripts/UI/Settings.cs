@@ -13,10 +13,6 @@ public class Settings : MonoBehaviour
     [SerializeField] public Slider timeSlider; 
     [SerializeField] public TMP_Text timeText;
     
-    [Header("Ingredients Slider")] 
-    [SerializeField] public Slider ingredientsSlider; 
-    [SerializeField] public TMP_Text ingredientsText;
-    
     [Header("Meat Dropdown")] 
     [SerializeField] public TMP_Dropdown meatDropdown;
 
@@ -29,7 +25,7 @@ public class Settings : MonoBehaviour
         }
 
         SetupDropdown();
-        SetupSliders();
+        SetupSlider();
         LoadSettingsToUI();
         RefreshLabels();
         SaveCurrentUIValues();
@@ -50,7 +46,6 @@ public class Settings : MonoBehaviour
         }
 
         meatDropdown.onValueChanged.AddListener(OnMeatTypeChanged);
-        ingredientsSlider.onValueChanged.AddListener(OnIngredientsChanged);
         timeSlider.onValueChanged.AddListener(OnTimeChanged);
     }
 
@@ -59,11 +54,6 @@ public class Settings : MonoBehaviour
         if (meatDropdown != null)
         {
             meatDropdown.onValueChanged.RemoveListener(OnMeatTypeChanged);
-        }
-
-        if (ingredientsSlider != null)
-        {
-            ingredientsSlider.onValueChanged.RemoveListener(OnIngredientsChanged);
         }
 
         if (timeSlider != null)
@@ -85,18 +75,6 @@ public class Settings : MonoBehaviour
         if (timeText == null)
         {
             Debug.LogError("Settings: не назначен Time Text.");
-            isValid = false;
-        }
-
-        if (ingredientsSlider == null)
-        {
-            Debug.LogError("Settings: не назначен Ingredients Slider.");
-            isValid = false;
-        }
-
-        if (ingredientsText == null)
-        {
-            Debug.LogError("Settings: не назначен Ingredients Text.");
             isValid = false;
         }
 
@@ -123,12 +101,8 @@ public class Settings : MonoBehaviour
         meatDropdown.RefreshShownValue();
     }
 
-    private void SetupSliders()
+    private void SetupSlider()
     {
-        ingredientsSlider.minValue = 3;
-        ingredientsSlider.maxValue = 5;
-        ingredientsSlider.wholeNumbers = true;
-
         timeSlider.minValue = 5;
         timeSlider.maxValue = 60;
         timeSlider.wholeNumbers = true;
@@ -136,7 +110,6 @@ public class Settings : MonoBehaviour
 
     private void LoadSettingsToUI()
     {
-        ingredientsSlider.value = GameSettings.IngredientCount;
         timeSlider.value = GameSettings.TimePerBurger;
         meatDropdown.value = (int)GameSettings.Meat;
 
@@ -150,7 +123,6 @@ public class Settings : MonoBehaviour
 
     private void OnIngredientsChanged(float value)
     {
-        ingredientsText.text = Mathf.RoundToInt(value).ToString();
         SaveCurrentUIValues();
     }
 
@@ -162,17 +134,15 @@ public class Settings : MonoBehaviour
 
     private void RefreshLabels()
     {
-        ingredientsText.text = Mathf.RoundToInt(ingredientsSlider.value).ToString();
         timeText.text = Mathf.RoundToInt(timeSlider.value) + "";
     }
 
     private void SaveCurrentUIValues()
     {
         MeatType selectedMeat = (MeatType)meatDropdown.value;
-        int selectedIngredientCount = Mathf.RoundToInt(ingredientsSlider.value);
         int selectedTime = Mathf.RoundToInt(timeSlider.value);
 
-        GameSettings.Set(selectedMeat, selectedIngredientCount, selectedTime);
+        GameSettings.Set(selectedMeat, selectedTime);
     }
     
     public void ReturnToPreviousScene()
