@@ -15,10 +15,13 @@ public class RecipeDisplayUI : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private TMP_Text recipeTitleText;
-    [SerializeField] private List<Image> ingredientImages = new List<Image>();
+    [SerializeField] private Transform ingredientsContainer;
+    [SerializeField] private RecipeIngredientIconUI ingredientIconPrefab;
 
     [Header("Sprites")]
     [SerializeField] private List<IngredientSprite> ingredientSprites = new List<IngredientSprite>();
+
+    private readonly List<RecipeIngredientIconUI> spawnedIcons = new List<RecipeIngredientIconUI>();
 
     private void Start()
     {
@@ -48,6 +51,20 @@ public class RecipeDisplayUI : MonoBehaviour
             return;
         }
 
+        if (ingredientsContainer == null)
+        {
+            Debug.LogError("RecipeDisplayUI: не назначен Ingredients Container.");
+            return;
+        }
+
+        if (ingredientIconPrefab == null)
+        {
+            Debug.LogError("RecipeDisplayUI: не назначен Ingredient Icon Prefab.");
+            return;
+        }
+
+        ClearRecipeIcons();
+
         List<string> ingredients = GameManager.Instance.GetCurrentResolvedRecipeIngredients();
 
         if (recipeTitleText != null)
@@ -55,28 +72,31 @@ public class RecipeDisplayUI : MonoBehaviour
             recipeTitleText.text = "Burger " + GameManager.Instance.CurrentRecipeNumber;
         }
 
-        for (int i = 0; i < ingredientImages.Count; i++)
+        foreach (string ingredientName in ingredients)
         {
-            Image image = ingredientImages[i];
-
-            if (image == null)
-            {
-                continue;
-            }
-
-            if (i >= ingredients.Count)
-            {
-                image.gameObject.SetActive(false);
-                continue;
-            }
-
-            string ingredientName = ingredients[i];
             Sprite sprite = GetSpriteForIngredient(ingredientName);
 
-            image.sprite = sprite;
-            image.enabled = sprite != null;
-            image.gameObject.SetActive(true);
+            RecipeIngredientIconUI icon = Instantiate(
+                ingredientIconPrefab,
+                ingredientsContainer
+            );
+
+            icon.Setup(sprite);
+            spawnedIcons.Add(icon);
         }
+    }
+    
+    private void ClearRecipeIcons()
+    {
+        foreach (RecipeIngredientIconUI icon in spawnedIcons)
+        {
+            if (icon != null)
+            {
+                Destroy(icon.gameObject);
+            }
+        }
+
+        spawnedIcons.Clear();
     }
 
     private Sprite GetSpriteForIngredient(string ingredientName)
